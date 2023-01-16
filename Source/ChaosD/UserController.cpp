@@ -15,19 +15,25 @@ AUserController::AUserController()
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
 
-	//static ConstructorHelpers::FClassFinder<UMenuWidget>UI_TEST_C(TEXT("/Game/UI/TESTUI.TESTUI_C"));
-	static ConstructorHelpers::FClassFinder<UMenuWidget>UI_TEST_C(TEXT("/Game/UI/UI_TEST2.UI_TEST2_C"));
+	static ConstructorHelpers::FClassFinder<UMenuWidget>UI_TEST_C(TEXT("/Game/UI/TESTUI.TESTUI_C"));
+	//static ConstructorHelpers::FClassFinder<UMenuWidget>UI_TEST_C(TEXT("/Game/UI/UI_TEST2.UI_TEST2_C"));
 	
 	if (UI_TEST_C.Succeeded())
 	{
 		MenuWidgetClass = UI_TEST_C.Class;
 	}
+	
 }
 
 void AUserController::BeginPlay()
 {
 	Super::BeginPlay();
 	ChangeInputGameMode(true);
+
+	//test
+	MenuWidget = CreateWidget<UMenuWidget>(this,MenuWidgetClass);
+	MenuWidget->AddToViewport();
+	MenuWidget->SetVisibility(ESlateVisibility::Visible);
 }
 
 void AUserController::PlayerTick(float DeltaTime)
@@ -85,7 +91,7 @@ void AUserController::OnSetDestinationPressed()
 	// We flag that the input is being pressed
 	bInputPressed = true;
 	// Just in case the character was moving because of a previous short press we stop it
-	StopMovement();
+	//StopMovement();
 }
 
 void AUserController::OnSetDestinationReleased()
@@ -135,9 +141,22 @@ void AUserController::ChangeInputGameMode(bool bGameMode)
 
 void AUserController::TestUII()
 {
-	MenuWidget = CreateWidget<UMenuWidget>(this,MenuWidgetClass);
-	//MenuWidget->AddToViewport();
-	MenuWidget->Visibility;
-
+	try
+	{
+		MenuWidget->SetVisibility(ESlateVisibility::Hidden);
+		MenuWidget = nullptr;
+	}
+	catch (...)
+	{
+		std::cout<<"asd";
+	}
+	
+	
+	
+		
+	
+	
+	
+	
 	//ChangeInputGameMode(false);
 }
